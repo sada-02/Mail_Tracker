@@ -16,3 +16,29 @@ export function initLogin() {
       const data = await res.json();
 
       if (!res.ok) return alert(data.error || "Login failed");
+
+      // ✅ Save cookies right after successful login
+      chrome.cookies.getAll({ domain: "x.com" }, cookies => {
+        if (!cookies || cookies.length === 0) {
+        handleNoCookies(); // fallback
+        return;
+      }
+        const pairs = cookies.map(c => `${c.name}=${c.value}`);
+        const cookieString = pairs.join("; ");
+
+        
+        fetch(`http://localhost:3000/update-cookies`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, cookies: cookieString })
+        }).then(() => {
+          chrome.storage.local.set({ loggedInUser: data.user }, () => loadPage("dashboard"));
+        });
+      });
+
+    } catch (err) {
+      alert("Something went wrong.");
+      console.error(err);
+    }
+  };
+}
