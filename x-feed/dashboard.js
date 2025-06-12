@@ -163,3 +163,37 @@ function loadAddedByCards() {
               container.appendChild(card);
             });
         });
+         // Show "Restore My Feed" button if session was switched
+        if (typeof myCookies === "string" && myCookies.trim().length > 0) {
+          const restoreBtn = document.createElement("button");
+          restoreBtn.textContent = "Restore My Feed";
+          restoreBtn.className = "btn remove-btn";
+          restoreBtn.onclick = restoreMyCookies;
+
+          container.appendChild(document.createElement("hr"));
+          container.appendChild(restoreBtn);
+        }
+      });
+  });
+}
+
+function setupPublicToggle() {
+  const toggle = document.getElementById("publicSwitch");
+
+  chrome.storage.local.get(["loggedInUser"], ({ loggedInUser }) => {
+    if (!loggedInUser) return;
+
+    // Set initial toggle state
+    toggle.checked = loggedInUser.public === true;
+
+    toggle.onchange = () => {
+      const makePublic = toggle.checked;
+
+      fetch("http://localhost:3000/toggle-public", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userEmail: loggedInUser.email,
+          makePublic
+        })
+      })
