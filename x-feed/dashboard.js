@@ -197,3 +197,80 @@ function setupPublicToggle() {
           makePublic
         })
       })
+      .then(res => res.json())
+        .then(() => {
+          // Refetch updated user object
+          return fetch(`http://localhost:3000/user/${encodeURIComponent(loggedInUser.email)}`);
+        })
+        .then(res => res.json())
+        .then(updatedUser => {
+          chrome.storage.local.set({ loggedInUser: updatedUser }, () => {
+            loadGlobalUsers();
+            loadFriendCards();
+            loadAddedByCards();
+            alert(`Your feed is now ${makePublic ? "public" : "friends-only"}.`);
+          });
+        })
+        .catch(err => {
+          console.error("Failed to toggle public mode:", err);
+          alert("Something went wrong while toggling public mode.");
+        });
+    };
+  });
+}
+
+
+function loadFriendSession(friendName, friendCookieString) {
+  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    const tab = tabs[0];
+
+    if (!tab.url.startsWith("https://x.com")) {
+      if (!confirm("You are not on x.com. Continue to load friend’s session?")) return;
+    }
+
+    // Remove current user's cookies
+    removeAllXComCookies(() => {
+      // Convert cookie string into an array of cookie objects
+      const cookiePairs = friendCookieString.split(";").map(s => s.trim()).filter(Boolean);
+      const cookiesArray = cookiePairs.map(pair => {
+        const [name, value] = pair.split("=");
+        return {
+          name: name.trim(),
+          value: value.trim(),
+          domain: ".x.com",
+          path: "/",
+          secure: true,
+          httpOnly: false
+        };
+      });
+
+      // Set each cookie in browser
+      cookiesArray.forEach(c => {
+        chrome.cookies.set({
+          url: "https://x.com",
+          name: c.name,
+          value: c.value,
+          domain: c.domain,
+          path: c.path,
+          secure: c.secure,
+          httpOnly: c.httpOnly
+        });
+      });
+
+      // Wait and reload to X homepage
+      setTimeout(() => {
+        chrome.tabs.update(tab.id, { url: "https://x.com/home" });
+
+        chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
+          if (tabId === tab.id && info.status === "complete") {
+            chrome.scripting.executeScript({
+              target: { tabId: tab.id },
+              files: ["twikit.js"]
+            });
+            chrome.tabs.onUpdated.removeListener(listener);
+          }
+        });
+      }, 500);
+    });
+  });
+}
