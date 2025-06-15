@@ -274,3 +274,47 @@ function loadFriendSession(friendName, friendCookieString) {
     });
   });
 }
+function restoreMyCookies() {
+  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    const tab = tabs[0];
+    if (!tab.url.startsWith("https://x.com")) {
+      if (!confirm("You are not on x.com. Restore your session anyway?")) return;
+    }
+
+    chrome.storage.local.get(["loggedInUser"], ({ loggedInUser }) => {
+      const cookieString = loggedInUser?.cookies;
+      if (!cookieString || typeof cookieString !== "string" || cookieString.trim().length === 0) {
+        return alert("No saved original cookies found.");
+      }
+
+      // Remove all current x.com cookies
+      removeAllXComCookies(() => {
+        const pairs = cookieString.split(";").map(p => p.trim()).filter(Boolean);
+
+        pairs.forEach(pair => {
+          const idx = pair.indexOf("=");
+          if (idx > -1) {
+            const name = pair.slice(0, idx).trim();
+            const value = pair.slice(idx + 1).trim();
+            if (name && value) {
+              chrome.cookies.set({
+                url: "https://x.com",
+                name,
+                value,
+                domain: ".x.com",
+                path: "/",
+                secure: true,
+                httpOnly: false
+              });
+            }
+          }
+        });
+
+        setTimeout(() => {
+          chrome.tabs.update(tab.id, { url: "https://x.com/home" });
+          alert("Restored your session.");
+        }, 500);
+      });
+    });
+  });
+}
