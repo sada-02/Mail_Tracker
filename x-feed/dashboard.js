@@ -75,3 +75,50 @@ function loadGlobalUsers() {
     }
   });
 }
+
+function loadFriendCards() {
+  const container = document.getElementById("friendsList");
+  container.innerHTML = '';
+    
+  chrome.storage.local.get(["loggedInUser"], ({ loggedInUser }) => {
+    if (!loggedInUser) return;
+
+    loggedInUser.friends.forEach(friendEmail => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const email = document.createElement("div");
+      email.textContent = friendEmail;
+
+      const btn = document.createElement("button");
+      btn.textContent = "Remove";
+      btn.className = "btn remove-btn";
+      btn.onclick = () => {
+        fetch("http://localhost:3000/remove-friend", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fromEmail: loggedInUser.email, toEmail: friendEmail })
+        }).then(() => {
+          loggedInUser.friends = loggedInUser.friends.filter(f => f !== friendEmail);
+          chrome.storage.local.set({ loggedInUser }, () => {
+            loadGlobalUsers();
+            loadFriendCards();
+          });
+        });
+      };
+
+      card.appendChild(email);
+      card.appendChild(btn);
+      container.appendChild(card);
+    });
+  });
+}
+
+function loadAddedByCards() {
+  const container = document.getElementById("addedByList");
+  container.innerHTML = '';
+  
+  chrome.storage.local.get(["loggedInUser"], ({ loggedInUser }) => {
+    if (!loggedInUser || !loggedInUser.email) return;
+    
+    const myCookies = loggedInUser.cookies;
