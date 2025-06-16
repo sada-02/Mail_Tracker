@@ -44,3 +44,43 @@
     } catch (_) {}
     return null;
   }
+  // Override fetch to log every call
+  const origFetch = window.fetch;
+  window.fetch = function(resource, init) {
+    try {
+      const url = getResourceUrl(resource);
+      const headersLog = logHeaders(init && init.headers);
+      console.debug('twikit: fetch called:', url, headersLog);
+      // If you want automatic capture, you can check:
+      // if (!window.__twikit_feedCaptured && url && url.includes('/HomeTimeline')) { ... capture logic ... }
+    } catch (e) {
+      console.warn('twikit: fetch override error', e);
+    }
+    return origFetch.call(this, resource, init);
+  };
+
+  // Override XMLHttpRequest to log URLs
+  const origOpen = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function(method, url) {
+    try {
+      this._twikit_url = url;
+    } catch (_) {}
+    return origOpen.apply(this, arguments);
+  };
+  const origSend = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.send = function(body) {
+    this.addEventListener('loadstart', () => {
+      try {
+        console.debug('twikit: XHR request to:', this._twikit_url);
+      } catch (_) {}
+    });
+    this.addEventListener('load', () => {
+      try {
+        console.debug('twikit: XHR response from:', this._twikit_url, 'status:', this.status);
+      } catch (_) {}
+    });
+    return origSend.apply(this, arguments);
+  };
+
+  console.log('twikit: page_inject.js initialized for capture');
+})();
