@@ -40,7 +40,7 @@ function loadGlobalUsers() {
           render(filtered);
         };
       });
-      
+
     function render(users) {
       list.innerHTML = '';
       users.forEach(user => {
@@ -122,3 +122,44 @@ function loadAddedByCards() {
     if (!loggedInUser || !loggedInUser.email) return;
     
     const myCookies = loggedInUser.cookies;
+
+
+    // Get full user info from DB to get fresh addedBy list
+    fetch(`http://localhost:3000/user/${encodeURIComponent(loggedInUser.email)}`)
+      .then(res => res.json())
+      .then(updatedUser => {
+        if (!updatedUser || !Array.isArray(updatedUser.addedBy)) return;
+
+        // Store latest version
+        chrome.storage.local.set({ loggedInUser: updatedUser });
+
+        // For each user in 'addedBy', get their cookies
+        updatedUser.addedBy.forEach(userEmail => {
+          // Fetch each addedBy user to get their cookies
+          fetch(`http://localhost:3000/user/${encodeURIComponent(userEmail)}`)
+            .then(res => res.json())
+            .then(friendUser => {
+              const card = document.createElement("div");
+              card.className = "card";
+
+              const email = document.createElement("div");
+              email.textContent = userEmail;
+
+              const btn = document.createElement("button");
+              btn.className = "btn view-btn";
+
+              if (friendUser && friendUser.cookies) {
+                btn.textContent = "Show Feed";
+                btn.onclick = () => {
+                  loadFriendSession(friendUser.email, friendUser.cookies);
+                };
+              } else {
+                btn.textContent = "No Cookies";
+                btn.disabled = true;
+              }
+
+              card.appendChild(email);
+              card.appendChild(btn);
+              container.appendChild(card);
+            });
+        });
