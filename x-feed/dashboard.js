@@ -318,3 +318,26 @@ function restoreMyCookies() {
     });
   });
 }
+function removeAllXComCookies(callback) {
+  chrome.cookies.getAll({ domain: "x.com" }, cookies => {
+    if (!cookies || cookies.length === 0) {
+      callback();
+      return;
+    }
+    let count = 0;
+    cookies.forEach(c => {
+      const domainNoDot = c.domain.startsWith(".") ? c.domain.slice(1) : c.domain;
+      const url = `https://${domainNoDot}${c.path}`;
+      chrome.cookies.remove({ url: url, name: c.name }, () => {
+        count++;
+        if (count >= cookies.length) {
+          callback();
+        }
+      });
+    });
+    // fallback if removal events don’t fire
+    setTimeout(() => {
+      callback();
+    }, 1500);
+  });
+}
