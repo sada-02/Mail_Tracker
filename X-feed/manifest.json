@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "X Feed Viewer (Cookie Switch, Read-Only Friend Mode)",
+  "version": "1.0",
+  "description": "Switch to a friend’s X session in read-only mode, then restore your own session.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://x.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+       "48": "icons/icon.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "48": "icons/icon.png"
+  }
+}
