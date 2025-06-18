@@ -42,6 +42,8 @@ export function initLogin() {
     }
   };
 }
+
+
 export function initSignup() {
   document.getElementById("goToLogin").onclick = () => loadPage("login");
 

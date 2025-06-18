@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="forest">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,26 +8,38 @@
 </head>
 <body>
   <div class="dashboard-container">
-    <h2>Global Users</h2>
-    <input type="text" id="globalSearch" placeholder="Search users..." class="search-bar" />
-    <ul id="globalUserList" class="scrollable-list"></ul>
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="global">Global Users</button>
+      <button class="tab-btn" data-tab="friends">Your Friends</button>
+      <button class="tab-btn" data-tab="addedby">Added</button>
+    </div>
 
-    <h2>Friends</h2>
-    <div id="friendsList" class="card-container"></div>
+    <!-- Tab Panels -->
+    <div class="tab-content active" id="tab-global">
+      <h2>Global Users</h2>
+      <input type="text" id="globalSearch" placeholder="Search users." class="search-bar" />
+      <ul id="globalUserList" class="scrollable-list"></ul>
+    </div>
 
-    <h2>Added By</h2>
-    <div id="addedByList" class="card-container"></div>
+    <div class="tab-content" id="tab-friends">
+      <h2>Your Friends</h2>
+      <div id="friendsList" class="card-container"></div>
+    </div>
+
+    <div class="tab-content" id="tab-addedby">
+      <h2>Added</h2>
+      <div id="addedByList" class="card-container"></div>
+    </div>
 
     <div class="public-toggle">
-      <label for="publicSwitch">Public Mode:</label>
+      <span>Go Public</span>
       <input type="checkbox" id="publicSwitch" />
+      <label for="publicSwitch"></label>
     </div>
 
     <button id="logoutBtn" class="btn logout-btn">Logout</button>
-
   </div>
 
-  <script src="popup.js"></script> <!-- Needed for loadFriendSession -->
-  <script src="dashboard.js" type="module"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
