@@ -12,6 +12,21 @@ export function initDashboard() {
   });
 };
 
+  document.querySelectorAll(".tab-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      const tab = button.dataset.tab;
+
+      // Remove active class from all buttons and tab contents
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+
+      // Add active class to the clicked button and its tab
+      button.classList.add("active");
+      document.getElementById(`tab-${tab}`).classList.add("active");
+    });
+  });
+
+
 }
 
 function loadGlobalUsers() {
@@ -163,14 +178,14 @@ function loadAddedByCards() {
               container.appendChild(card);
             });
         });
-         // Show "Restore My Feed" button if session was switched
+
+        // Show "Restore My Feed" button if session was switched
         if (typeof myCookies === "string" && myCookies.trim().length > 0) {
           const restoreBtn = document.createElement("button");
           restoreBtn.textContent = "Restore My Feed";
           restoreBtn.className = "btn remove-btn";
           restoreBtn.onclick = restoreMyCookies;
 
-          container.appendChild(document.createElement("hr"));
           container.appendChild(restoreBtn);
         }
       });
@@ -197,7 +212,7 @@ function setupPublicToggle() {
           makePublic
         })
       })
-      .then(res => res.json())
+        .then(res => res.json())
         .then(() => {
           // Refetch updated user object
           return fetch(`http://localhost:3000/user/${encodeURIComponent(loggedInUser.email)}`);
@@ -274,6 +289,7 @@ function loadFriendSession(friendName, friendCookieString) {
     });
   });
 }
+
 function restoreMyCookies() {
   chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
     const tab = tabs[0];
@@ -318,6 +334,7 @@ function restoreMyCookies() {
     });
   });
 }
+
 function removeAllXComCookies(callback) {
   chrome.cookies.getAll({ domain: "x.com" }, cookies => {
     if (!cookies || cookies.length === 0) {
@@ -341,3 +358,4 @@ function removeAllXComCookies(callback) {
     }, 1500);
   });
 }
+

@@ -1,5 +1,33 @@
-<h2>Login</h2>
-<input type="email" id="email" placeholder="Email" />
-<input type="password" id="password" placeholder="Password" />
-<button id="loginBtn">Login</button>
-<p>No account? <a href="#" id="goToSignup">Sign Up</a></p>
+<!DOCTYPE html>
+<html lang="en" data-theme="forest">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-card">
+    <h2>Login</h2>
+
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+
+    <button id="loginBtn">Login</button>
+
+    <!-- Original info box, preserved exactly -->
+    <div style="background-color: #e3f2fd;
+                color: #0d47a1;
+                padding: 12px 16px;
+                border-left: 5px solid #1976d2;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                border-radius: 4px;
+                max-width: 400px;">
+      While logging ensure that you are logged into your X.com account.
+    </div>
+
+    <p>No account? <a href="#" id="goToSignup">Sign Up</a></p>
+  </div>
+</body>
+</html>
