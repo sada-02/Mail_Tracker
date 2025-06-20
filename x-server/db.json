@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "username": "salamanca",
+      "email": "salamanca@gmail.com",
+      "password": "salamanca",
+      "cookies": "personalization_id=\"v1_SWq3UwJ6NTFsJ6AW+2MxCw==\"; gt=1937482518183207337; kdt=9OrGNcJuG0704jCE5oGhjTMXVcjbCW8R6XLOWQwK; dnt=1; __cf_bm=StVq919y4oUvCvt5mVBmEMcgcsyxIWnVvU6IS8AMaB0-1750770673-1.0.1.1-IJfVo0ZtJXErGqCg5GFEoEYQ00e.FPQL3aF8VWHla7tyvIf_zrJbzi1MiM7fqquBT5lCzhw5U3JzFD_g2gIBQ6Og_dExRtGy7vjowsq7EHU; auth_multi=\"1937491426713251840:2a6260b5de1e7609848e4db0bdb2289f138aa8e3\"; auth_token=a7afc195c4d0b6124b6c03c22d5157efd81cc429; guest_id_ads=v1%3A175077076325185578; guest_id_marketing=v1%3A175077076325185578; guest_id=v1%3A175077076325185578; twid=u%3D1884505528442970113; ct0=e0a5403da0d1dfc2e0048f91e316e3cb25f500450093a41b9c2f1878c4b7a4caa1e2b27c12eadc29f729f7e37591a344aa74941225f656bf7a796294b14506f75fb275fe9fd3a6d0d101ad4d4ce75b8e",
+      "public": false,
+      "friends": [
+        "heisenberg@gmail.com"
+      ],
+      "addedBy": [
+        "heisenberg@gmail.com"
+      ]
+    },
+    {
+      "username": "heisenberg",
+      "email": "heisenberg@gmail.com",
+      "password": "heisenberg",
+      "cookies": "personalization_id=\"v1_SWq3UwJ6NTFsJ6AW+2MxCw==\"; gt=1937482518183207337; kdt=9OrGNcJuG0704jCE5oGhjTMXVcjbCW8R6XLOWQwK; dnt=1; ads_prefs=\"HBISAAA=\"; auth_multi=\"1884505528442970113:a7afc195c4d0b6124b6c03c22d5157efd81cc429\"; auth_token=2a6260b5de1e7609848e4db0bdb2289f138aa8e3; guest_id_ads=v1%3A175077065666964741; guest_id_marketing=v1%3A175077065666964741; guest_id=v1%3A175077065666964741; twid=u%3D1937491426713251840; ct0=f289ae2bd19dcc40872adafde8187bd9a711309cfad7792e95c015dea66973dbdaefac1cf599787f2663bfe628f221e66d070ee77efa8c4efa720313468fcd80436b584394eb2af6a22006cf502a06c0; __cf_bm=StVq919y4oUvCvt5mVBmEMcgcsyxIWnVvU6IS8AMaB0-1750770673-1.0.1.1-IJfVo0ZtJXErGqCg5GFEoEYQ00e.FPQL3aF8VWHla7tyvIf_zrJbzi1MiM7fqquBT5lCzhw5U3JzFD_g2gIBQ6Og_dExRtGy7vjowsq7EHU",
+      "public": false,
+      "friends": [
+        "salamanca@gmail.com"
+      ],
+      "addedBy": [
+        "salamanca@gmail.com"
+      ]
+    }
+  ]
+}
