@@ -177,3 +177,30 @@ button:hover {
   border-radius: 50%;
   transition: transform 0.3s;
 }
+.public-toggle input:checked + label {
+  background: var(--light-forest);
+}
+.public-toggle input:checked + label::after {
+  transform: translateX(24px);
+}
+
+/* 11) Popup bottom-sheet override — same dimensions */
+.sheet {
+  width: 360px;
+  margin: 0 auto 40px;
+  border-radius: 12px 12px 0 0;
+}
+.drag-handle {
+  width: 40px;
+  height: 4px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 2px;
+  margin: 12px auto;
+}
+/* Hide all tab panels by default, show only the one marked “active” */
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
