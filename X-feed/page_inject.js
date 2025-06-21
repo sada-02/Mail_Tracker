@@ -44,6 +44,7 @@
     } catch (_) {}
     return null;
   }
+
   // Override fetch to log every call
   const origFetch = window.fetch;
   window.fetch = function(resource, init) {
