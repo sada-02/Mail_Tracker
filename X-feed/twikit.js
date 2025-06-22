@@ -24,3 +24,30 @@
     e.stopPropagation();
     e.preventDefault();
   }, true);
+  overlay.addEventListener("mousedown", e => {
+    e.stopPropagation();
+    e.preventDefault();
+  }, true);
+  overlay.addEventListener("mouseup", e => {
+    e.stopPropagation();
+    e.preventDefault();
+  }, true);
+  overlay.addEventListener("contextmenu", e => {
+    e.stopPropagation();
+    e.preventDefault();
+  }, true);
+
+  // Block keyboard events globally (e.g., liking via "L", navigating via keys, etc.)
+  function blockKey(e) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+  }
+  window.addEventListener("keydown", blockKey, true);
+  window.addEventListener("keypress", blockKey, true);
+  window.addEventListener("keyup", blockKey, true);
+
+  // Optionally hide any floating action buttons if you want purely read-only view.
+  // But overlay already blocks clicks; the UI remains visible but not interactive.
+
+  console.log("twikit: Friend mode active — interactions blocked.");
+})();
