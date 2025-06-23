@@ -1,0 +1,39 @@
+/* 1) Colors */
+:root {
+  --dark-forest:  #1f2c23;
+  --mid-forest:   #2b3a30;
+  --light-forest: #4b604b;
+  --leaf-tone:    #a3c99c;
+  --text-light:   #eef4ea;
+  --card-bg:      rgba(43, 58, 48, 0.9);
+}
+
+/* 2) Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text-light);
+}
+
+/* 3) Full-Scene Background — no touching card dimensions */
+body {
+  /* original full-height page */
+  min-height: 100vh;
+  background:
+    /* faint wood grain */
+    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAoMBg0M8mSAAAAAASUVORK5CYII=") center/cover,
+    /* leafy shrub silhouette at bottom */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 150' opacity='0.3'%3E%3Cpath fill='%23ffffff' d='M0 50 Q100 0 200 50 T500 50 L500 150 L0 150Z'/%3E%3C/svg%3E") bottom center/cover no-repeat,
+    /* repeating leaf pattern */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ccircle cx='60' cy='60' r='50' fill='%23ffffff' opacity='0.05'/%3E%3C/svg%3E") center/200px 200px repeat,
+    var(--dark-forest);
+  background-blend-mode: overlay, multiply, overlay, normal;
+  padding: 20px; /* give a bit of breathing room */
+}
