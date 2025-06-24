@@ -73,3 +73,5 @@
 ---
 
 Enjoy exploring feeds with **X Feed Viewer**! Feel free to contribute or report issues on GitHub.
+
+---
