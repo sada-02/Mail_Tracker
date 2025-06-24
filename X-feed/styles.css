@@ -37,3 +37,94 @@ body {
   background-blend-mode: overlay, multiply, overlay, normal;
   padding: 20px; /* give a bit of breathing room */
 }
+
+/* 4) Original card containers — identical width & flow */
+.login-card,
+.signup-form,
+.dashboard-container,
+.sheet {
+  /* preserved original widths & margins */
+  width: 360px;
+  margin: 40px auto;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow:
+    0 8px 16px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.1);
+  /* let overflow flow naturally */
+}
+
+/* 5) Headings & Text — keep sizes */
+h1, h2 {
+  color: var(--leaf-tone);
+  margin-bottom: 16px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+
+p, label {
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+/* 6) Inputs — full width of their card, same height */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  height: 38px;               /* preserved original height */
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.15);
+  color: var(--text-light);
+  outline: none;
+  transition: background 0.3s;
+}
+input::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+input:focus {
+  background: rgba(255,255,255,0.25);
+}
+
+/* 7) Buttons — same shape & dimension */
+button {
+  width: 100%;
+  height: 44px;              /* preserved original button height */
+  margin-top: 12px;
+  border: none;
+  border-radius: 22px;       /* pill shape as before */
+  background: var(--light-forest);
+  color: var(--text-light);
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+}
+
+/* 8) Divider “OR” */
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 24px 0;
+  color: rgba(255,255,255,0.7);
+}
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 1px;
+  background: rgba(255,255,255,0.3);
+}
+.divider::before { left: 0; }
+.divider::after { right: 0; }
